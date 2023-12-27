@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <!--JS for Jasmine standalone library 5.1.1:don't forget to include lib/ folder-->
+    <link rel="shortcut icon" type="image/png" href="lib/jasmine-5.1.1/jasmine_favicon.png">
+    <link rel="stylesheet" href="lib/jasmine-5.1.1/jasmine.css">
+    <script src="lib/jasmine-5.1.1/jasmine.js"></script>
+    <script src="lib/jasmine-5.1.1/jasmine-html.js"></script>
+    <script src="lib/jasmine-5.1.1/boot0.js"></script>
+    <script src="lib/jasmine-5.1.1/boot1.js"></script><!--optional:configure Jasmine env-->
+    <!-- JS for Jasmine standalone library-->
+
+    <script>
+function extractValue(A,key){
+  return A.reduce((arr,obj)=>{
+    arr.push(obj[key])
+    return arr
+  },[])
+}
+function vowelCount(s){
+  const vowels = "aeiou"
+  return s.split('').reduce((obj,char)=>{
+    let c = char.toLowerCase()
+    if(vowels.indexOf(c) !== -1){
+      if(!obj[c]) obj[c]=1
+      else obj[c]++
+    }
+    return obj
+  }, {})
+}
+function addKeyAndValue(A,k,v){
+  return A.reduce((arr,obj,i)=>{
+    arr[i][k] = v
+    return arr
+  },A)
+}
+function partition(A,Fn){
+  return A.reduce((arr,val)=>{
+    Fn(val) ? arr[0].push(val)
+            : arr[1].push(val)
+    return arr
+  }, [[],[]])
+}
+
+describe("#extractValue",()=>it("returns new array with values of specified key",()=>expect(extractValue([{name:"Li"},{age:20}],"age")).toEqual([undefined,20])))
+describe("#vowelCount",()=>it("returns object with {key:value} as {vowel:count}",()=>expect(vowelCount("abai")).toEqual({a:2,i:1})))
+describe("#addKeyAndValue",()=>it("adds key & value to each object",()=>expect(addKeyAndValue([{name:"A"},{name:"B"}], "sex", "male")).toEqual([{sex:"male",name:"A"},{sex:"male",name:"B"}])))
+describe("#partition",()=>{
+  it("returns array of 2 subarrays:first subarray as values returning true from the callback function",()=>{
+    expect(partition([1,2,3,4],x=>x%2===0)).toEqual([[2,4],[1,3]])
+    expect(partition(["a","bc","xyz"],s=>s.length<3)).toEqual([["a","bc"],["xyz"]])
+  })
+})
+    </script>
+  </head>
+  <body>
+    <h3>9.3.4. arr.reduce() exercise</h3>
+  </body>
+</html>
