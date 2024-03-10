@@ -1,1 +1,1 @@
-# arr.reduce() exercise
+# arr.reduce() exercises
